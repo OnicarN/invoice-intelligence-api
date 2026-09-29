@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: invoice-ai-postgres
+    environment:
+      POSTGRES_DB: invoice_ai
+      POSTGRES_USER: invoice_ai
+      POSTGRES_PASSWORD: invoice_ai
+    ports:
+      - "5433:5432"
