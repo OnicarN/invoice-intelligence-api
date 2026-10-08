@@ -9,5 +9,8 @@ spring:
       ddl-auto: validate
     open-in-view: false
 
+jwt:
+  secret: ${JWT_SECRET}
+
 server:
   port: 8081
