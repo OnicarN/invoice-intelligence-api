@@ -4,7 +4,7 @@ Backend REST desarrollado con Java y Spring Boot para la gestión y procesamient
 
 El objetivo del proyecto es construir una API capaz de recibir documentos de facturas, almacenarlos, procesarlos mediante IA y extraer información estructurada de ellos.
 
-> 🚧 **Project status:** In development
+> 🚧 **Estado del proyecto:** ¡En desarrollo!
 
 ## Tech Stack
 
@@ -21,9 +21,7 @@ El objetivo del proyecto es construir una API capaz de recibir documentos de fac
 - JUnit 5
 - Testcontainers
 
-## Architecture
-
-The project follows a pragmatic Clean Architecture approach.
+El proyecto sigue un enfoque de Clean Architecture pragmático.
 
 ```text
 presentation
