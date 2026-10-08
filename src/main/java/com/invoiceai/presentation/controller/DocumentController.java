@@ -5,14 +5,13 @@ import com.invoiceai.application.usecase.GetDocumentUseCase;
 import com.invoiceai.domain.model.Document;
 import com.invoiceai.presentation.dto.CreateDocumentRequest;
 import com.invoiceai.presentation.dto.DocumentResponse;
-
 import jakarta.validation.Valid;
-
-import java.util.UUID;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/documents")
@@ -23,20 +22,24 @@ public class DocumentController {
 
     public DocumentController(
             CreateDocumentUseCase createDocumentUseCase,
-            GetDocumentUseCase getDocumentUseCase
-    ) {
+            GetDocumentUseCase getDocumentUseCase) {
+
         this.createDocumentUseCase = createDocumentUseCase;
         this.getDocumentUseCase = getDocumentUseCase;
     }
 
     @PostMapping
     public ResponseEntity<DocumentResponse> createDocument(
-            @Valid @RequestBody CreateDocumentRequest request
-    ) {
+            @Valid @RequestBody CreateDocumentRequest request) {
+
+        UUID userId = (UUID) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
 
         Document document = new Document(
                 null,
-                request.getUserId(),
+                userId,
                 request.getFileName(),
                 request.getFileType(),
                 request.getStoragePath(),
@@ -52,7 +55,8 @@ public class DocumentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DocumentResponse> getDocument(@PathVariable UUID id) {
+    public ResponseEntity<DocumentResponse> getDocument(
+            @PathVariable UUID id) {
 
         Document document = getDocumentUseCase.getById(id);
 
@@ -60,6 +64,7 @@ public class DocumentController {
     }
 
     private DocumentResponse toResponse(Document document) {
+
         return new DocumentResponse(
                 document.getId(),
                 document.getUserId(),
